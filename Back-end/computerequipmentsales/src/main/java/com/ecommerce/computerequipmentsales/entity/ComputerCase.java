@@ -1,5 +1,6 @@
 package com.ecommerce.computerequipmentsales.entity;
 
+import com.ecommerce.computerequipmentsales.entity.normalization.ComputerCasePSU;
 import com.sun.istack.NotNull;
 import lombok.Data;
 
@@ -16,18 +17,6 @@ public class ComputerCase extends BaseEntity{
     @NotNull
     @Column(name = "CASE_TYPE")
     private String caseType;
-
-    @NotNull
-    @Column(name = "PSU")
-    private boolean psu;
-
-    @NotNull
-    @Column(name = "PSU_LOCATION")
-    private String psuLocation;
-
-    @NotNull
-    @Column(name = "PSU_POWER_RATING")
-    private String psuPowerRating;
 
     @NotNull
     @Column(name = "TRANSPARENT_CASE")
@@ -59,6 +48,11 @@ public class ComputerCase extends BaseEntity{
 
     @NotNull
     @ManyToOne
+    @JoinColumn(name = "COMPUTER_CASE_PSU_ID")
+    private ComputerCasePSU computerCasePsu;
+
+    @NotNull
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "STOCK_ID")
     private Stock stock;
 }

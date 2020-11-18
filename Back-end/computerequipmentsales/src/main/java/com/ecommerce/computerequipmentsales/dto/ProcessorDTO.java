@@ -1,6 +1,7 @@
 package com.ecommerce.computerequipmentsales.dto;
 
 import com.ecommerce.computerequipmentsales.entity.Stock;
+import com.ecommerce.computerequipmentsales.entity.normalization.ProcessorCore;
 import lombok.Data;
 
 @Data
@@ -26,5 +27,7 @@ public class ProcessorDTO extends BaseEntityDTO{
 
     private String processorType;
 
-    private Stock stock;
+    private ProcessorCore processorCoreId;
+
+    private Stock stockId;
 }

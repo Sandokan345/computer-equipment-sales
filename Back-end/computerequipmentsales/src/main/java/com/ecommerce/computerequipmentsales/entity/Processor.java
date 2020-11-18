@@ -1,5 +1,6 @@
 package com.ecommerce.computerequipmentsales.entity;
 
+import com.ecommerce.computerequipmentsales.entity.normalization.ProcessorCore;
 import com.sun.istack.NotNull;
 import lombok.Data;
 
@@ -26,14 +27,6 @@ public class Processor extends BaseEntity{
     private String frequencySpeed;
 
     @NotNull
-    @Column(name = "CORE_AMOUNT")
-    private int coreAmount;
-
-    @NotNull
-    @Column(name = "CORE_NAME")
-    private String coreName;
-
-    @NotNull
     @Column(name = "INTERNAL_GRAPHIC")
     private String internalGraphic;
 
@@ -51,6 +44,11 @@ public class Processor extends BaseEntity{
 
     @NotNull
     @ManyToOne
+    @JoinColumn(name = "PROCESSOR_CORE_ID")
+    private ProcessorCore processorCore;
+
+    @NotNull
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "STOCK_ID")
     private Stock stock;
 }

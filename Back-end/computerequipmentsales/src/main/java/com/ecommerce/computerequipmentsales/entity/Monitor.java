@@ -1,5 +1,6 @@
 package com.ecommerce.computerequipmentsales.entity;
 
+import com.ecommerce.computerequipmentsales.entity.normalization.MonitorScreen;
 import com.sun.istack.NotNull;
 import lombok.Data;
 
@@ -12,14 +13,6 @@ public class Monitor extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @NotNull
-    @Column(name = "SCREEN_SIZE")
-    private String screenSize;
-
-    @NotNull
-    @Column(name = "RESOLUTION")
-    private String resolution;
 
     @NotNull
     @Column(name = "REFRESH_SPEED")
@@ -39,6 +32,11 @@ public class Monitor extends BaseEntity{
 
     @NotNull
     @ManyToOne
+    @JoinColumn(name = "MONITOR_SCREEN_ID")
+    private MonitorScreen monitorScreen;
+
+    @NotNull
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "STOCK_ID")
     private Stock stock;
 }

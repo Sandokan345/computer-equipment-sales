@@ -42,7 +42,7 @@ public class HDD extends BaseEntity{
     private String capacity;
 
     @NotNull
-    @ManyToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "STOCK_ID")
     private Stock stock;
 }

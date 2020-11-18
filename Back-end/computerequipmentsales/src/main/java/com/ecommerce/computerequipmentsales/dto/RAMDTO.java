@@ -26,5 +26,5 @@ public class RAMDTO extends BaseEntityDTO{
 
     private String ramCompatibility;
 
-    private Stock stock;
+    private Stock stockId;
 }

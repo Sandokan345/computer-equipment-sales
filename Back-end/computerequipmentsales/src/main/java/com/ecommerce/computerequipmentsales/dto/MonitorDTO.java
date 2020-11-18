@@ -1,6 +1,7 @@
 package com.ecommerce.computerequipmentsales.dto;
 
 import com.ecommerce.computerequipmentsales.entity.Stock;
+import com.ecommerce.computerequipmentsales.entity.normalization.MonitorScreen;
 import lombok.Data;
 
 @Data
@@ -20,5 +21,7 @@ public class MonitorDTO extends BaseEntityDTO{
 
     private String outputs;
 
-    private Stock stock;
+    private MonitorScreen monitorScreenId;
+
+    private Stock stockId;
 }

@@ -1,6 +1,7 @@
 package com.ecommerce.computerequipmentsales.dto;
 
 import com.ecommerce.computerequipmentsales.entity.Stock;
+import com.ecommerce.computerequipmentsales.entity.normalization.MainboardRAM;
 import lombok.Data;
 
 @Data
@@ -30,5 +31,7 @@ public class MainboardDTO extends BaseEntityDTO{
 
     private boolean displayPort;
 
-    private Stock stock;
+    private MainboardRAM mainboardRAMId;
+
+    private Stock stockId;
 }

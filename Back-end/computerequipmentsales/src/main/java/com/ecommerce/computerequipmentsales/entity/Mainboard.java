@@ -1,5 +1,6 @@
 package com.ecommerce.computerequipmentsales.entity;
 
+import com.ecommerce.computerequipmentsales.entity.normalization.MainboardRAM;
 import com.sun.istack.NotNull;
 import lombok.Data;
 
@@ -20,22 +21,6 @@ public class Mainboard extends BaseEntity{
     @NotNull
     @Column(name = "CHIPSET")
     private String chipset;
-
-    @NotNull
-    @Column(name = "RAM_SLOT_AMOUNT")
-    private int ramSlotAmount;
-
-    @NotNull
-    @Column(name = "MAX_RAM_SUPPORT")
-    private String maxRamSupport;
-
-    @NotNull
-    @Column(name = "RAM_TYPE")
-    private String ramType;
-
-    @NotNull
-    @Column(name = "RAM_FREQUENCY_SPEED")
-    private String ramFrequencySpeed;
 
     @NotNull
     @Column(name = "COMPATIBLE_PROCESSORS")
@@ -59,6 +44,11 @@ public class Mainboard extends BaseEntity{
 
     @NotNull
     @ManyToOne
+    @JoinColumn(name = "MAINBOARD_RAM_ID")
+    private MainboardRAM mainboardRAM;
+
+    @NotNull
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "STOCK_ID")
     private Stock stock;
 }

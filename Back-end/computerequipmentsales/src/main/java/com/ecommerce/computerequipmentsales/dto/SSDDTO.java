@@ -20,5 +20,5 @@ public class SSDDTO extends BaseEntityDTO{
 
     private String maxWritingSpeed;
 
-    private Stock stock;
+    private Stock stockId;
 }

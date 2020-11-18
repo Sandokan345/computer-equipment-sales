@@ -22,5 +22,5 @@ public class HDDDTO extends BaseEntityDTO{
 
     private String capacity;
 
-    private Stock stock;
+    private Stock stockId;
 }

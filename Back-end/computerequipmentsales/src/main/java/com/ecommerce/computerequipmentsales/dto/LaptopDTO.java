@@ -1,6 +1,7 @@
 package com.ecommerce.computerequipmentsales.dto;
 
 import com.ecommerce.computerequipmentsales.entity.Stock;
+import com.ecommerce.computerequipmentsales.entity.normalization.*;
 import lombok.Data;
 
 @Data
@@ -56,5 +57,17 @@ public class LaptopDTO extends BaseEntityDTO{
 
     private String operatingSystem;
 
-    private Stock stock;
+    private LaptopScreen laptopScreenId;
+
+    private LaptopSSD laptopSSDId;
+
+    private LaptopHDD laptopHDDId;
+
+    private LaptopGPU laptopGPUId;
+
+    private LaptopProcessor laptopProcessorId;
+
+    private LaptopRAM laptopRAMId;
+
+    private Stock stockId;
 }

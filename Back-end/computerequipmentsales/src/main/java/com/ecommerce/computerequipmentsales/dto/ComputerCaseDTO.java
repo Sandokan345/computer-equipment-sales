@@ -1,6 +1,7 @@
 package com.ecommerce.computerequipmentsales.dto;
 
 import com.ecommerce.computerequipmentsales.entity.Stock;
+import com.ecommerce.computerequipmentsales.entity.normalization.ComputerCasePSU;
 import lombok.Data;
 
 @Data
@@ -9,12 +10,6 @@ public class ComputerCaseDTO extends BaseEntityDTO{
     private Long id;
 
     private String caseType;
-
-    private boolean psu;
-
-    private String psuLocation;
-
-    private String psuPowerRating;
 
     private boolean transparentCase;
 
@@ -30,5 +25,7 @@ public class ComputerCaseDTO extends BaseEntityDTO{
 
     private String mainboardSupport;
 
-    private Stock stock;
+    private ComputerCasePSU computerCasePsuId;
+
+    private Stock stockId;
 }

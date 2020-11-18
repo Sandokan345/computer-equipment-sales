@@ -1,6 +1,8 @@
 package com.ecommerce.computerequipmentsales.dto;
 
 import com.ecommerce.computerequipmentsales.entity.Stock;
+import com.ecommerce.computerequipmentsales.entity.normalization.DisplayCardGPU;
+import com.ecommerce.computerequipmentsales.entity.normalization.DisplayCardMemory;
 import lombok.Data;
 
 @Data
@@ -44,5 +46,9 @@ public class DisplayCardDTO extends BaseEntityDTO{
 
     private boolean hdcpReady;
 
-    private Stock stock;
+    private DisplayCardGPU displayCardGPUId;
+
+    private DisplayCardMemory displayCardMemory;
+
+    private Stock stockId;
 }

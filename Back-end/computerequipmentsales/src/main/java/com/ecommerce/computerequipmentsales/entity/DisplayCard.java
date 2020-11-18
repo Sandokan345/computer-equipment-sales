@@ -1,5 +1,7 @@
 package com.ecommerce.computerequipmentsales.entity;
 
+import com.ecommerce.computerequipmentsales.entity.normalization.DisplayCardGPU;
+import com.ecommerce.computerequipmentsales.entity.normalization.DisplayCardMemory;
 import com.sun.istack.NotNull;
 import lombok.Data;
 
@@ -18,14 +20,6 @@ public class DisplayCard extends BaseEntity{
     private String producer;
 
     @NotNull
-    @Column(name = "GPU_SERIAL")
-    private String gpuSerial;
-
-    @NotNull
-    @Column(name = "GPU_MODEL")
-    private String gpuModel;
-
-    @NotNull
     @Column(name = "MAX_CORE_SPEED")
     private String maxCoreSpeed;
 
@@ -40,22 +34,6 @@ public class DisplayCard extends BaseEntity{
     @NotNull
     @Column(name = "DIRECTX")
     private String directX;
-
-    @NotNull
-    @Column(name = "MEMORY_TYPE")
-    private String memoryType;
-
-    @NotNull
-    @Column(name = "MEMORY_SPEED")
-    private String memorySpeed;
-
-    @NotNull
-    @Column(name = "MEMORY_CAPACITY")
-    private String memoryCapacity;
-
-    @NotNull
-    @Column(name = "MEMORY_INTERFACE")
-    private String memoryInterface;
 
     @NotNull
     @Column(name = "HDMI")
@@ -87,6 +65,16 @@ public class DisplayCard extends BaseEntity{
 
     @NotNull
     @ManyToOne
+    @JoinColumn(name = "DISPLAY_CARD_GPU_ID")
+    private DisplayCardGPU displayCardGPU;
+
+    @NotNull
+    @ManyToOne
+    @JoinColumn(name = "DISPLAY_CARD_MEMORY_ID")
+    private DisplayCardMemory displayCardMemory;
+
+    @NotNull
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "STOCK_ID")
     private Stock stock;
 }

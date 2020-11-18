@@ -50,7 +50,7 @@ public class RAM extends BaseEntity{
     private String ramCompatibility;
 
     @NotNull
-    @ManyToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "STOCK_ID")
     private Stock stock;
 }
