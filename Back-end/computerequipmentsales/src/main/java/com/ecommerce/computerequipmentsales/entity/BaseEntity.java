@@ -2,7 +2,6 @@ package com.ecommerce.computerequipmentsales.entity;
 
 import com.sun.istack.NotNull;
 import lombok.Data;
-import org.hibernate.type.descriptor.sql.VarcharTypeDescriptor;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -20,8 +19,8 @@ public abstract class BaseEntity implements Serializable {
     private String brand;
 
     @NotNull
-    @Column(name = "PRODUCT_CODE", unique = true)
-    private Long productCode;
+    @Column(name = "PRODUCT_CODE", unique = true, nullable = false)
+    private String productCode;
 
     @NotNull
     @Column(name = "POINT_SCORING")
