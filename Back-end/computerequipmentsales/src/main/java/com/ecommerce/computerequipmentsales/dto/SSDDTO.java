@@ -1,6 +1,5 @@
 package com.ecommerce.computerequipmentsales.dto;
 
-import com.ecommerce.computerequipmentsales.entity.Stock;
 import lombok.Data;
 
 @Data
@@ -20,5 +19,5 @@ public class SSDDTO extends BaseEntityDTO{
 
     private String maxWritingSpeed;
 
-    private Stock stockId;
+    private Long stockId;
 }

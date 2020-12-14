@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface SSDDao extends JpaRepository<SSD, Long> {
+    SSD findOneByProductCode(String productCode);
 }

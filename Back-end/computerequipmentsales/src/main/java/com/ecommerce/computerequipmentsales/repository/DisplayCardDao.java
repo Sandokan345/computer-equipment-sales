@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface DisplayCardDao extends JpaRepository<DisplayCard, Long> {
+    DisplayCard findOneByProductCode(String productCode);
 }

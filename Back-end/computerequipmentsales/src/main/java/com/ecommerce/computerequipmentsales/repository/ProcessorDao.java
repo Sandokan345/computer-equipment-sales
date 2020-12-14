@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ProcessorDao extends JpaRepository<Processor, Long> {
+    Processor findOneByProductCode(String productCode);
 }

@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface RAMDao extends JpaRepository<RAM, Long> {
+    RAM findOneByProductCode(String productCode);
 }

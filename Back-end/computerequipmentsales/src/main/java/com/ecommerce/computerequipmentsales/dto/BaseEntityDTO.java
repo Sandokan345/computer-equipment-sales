@@ -6,8 +6,6 @@ import lombok.Data;
 @Data
 public class BaseEntityDTO {
 
-    private Long id;
-
     private String brand;
 
     private String productCode;

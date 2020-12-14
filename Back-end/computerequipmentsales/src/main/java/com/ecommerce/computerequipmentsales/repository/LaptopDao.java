@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface LaptopDao extends JpaRepository<Laptop, Long> {
+    Laptop findOneByProductCode(String productCode);
 }

@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface MainboardDao extends JpaRepository<Mainboard, Long> {
+    Mainboard findOneByProductCode(String productCode);
 }

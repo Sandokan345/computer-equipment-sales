@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ComputerCaseDao extends JpaRepository<ComputerCase, Long> {
+    ComputerCase findOneByProductCode(String productCode);
 }

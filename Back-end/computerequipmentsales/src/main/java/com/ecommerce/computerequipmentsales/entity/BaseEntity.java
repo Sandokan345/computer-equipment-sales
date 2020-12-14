@@ -1,5 +1,6 @@
 package com.ecommerce.computerequipmentsales.entity;
 
+import com.ecommerce.computerequipmentsales.dto.ComputerCaseDTO;
 import com.sun.istack.NotNull;
 import lombok.Data;
 
@@ -9,10 +10,6 @@ import java.io.Serializable;
 @Data
 @MappedSuperclass
 public abstract class BaseEntity implements Serializable {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
     @NotNull
     @Column(name = "BRAND")
@@ -29,4 +26,5 @@ public abstract class BaseEntity implements Serializable {
     @NotNull
     @Column(name = "PRICE")
     private float price;
+
 }

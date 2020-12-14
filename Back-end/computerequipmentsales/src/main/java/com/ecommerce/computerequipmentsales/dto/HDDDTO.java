@@ -1,6 +1,5 @@
 package com.ecommerce.computerequipmentsales.dto;
 
-import com.ecommerce.computerequipmentsales.entity.Stock;
 import lombok.Data;
 
 @Data
@@ -22,5 +21,5 @@ public class HDDDTO extends BaseEntityDTO{
 
     private String capacity;
 
-    private Stock stockId;
+    private Long stockId;
 }
