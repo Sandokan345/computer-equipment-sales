@@ -32,6 +32,6 @@ public class LaptopScreenController {
 
     @PutMapping("/update")
     public ApiResponse update(@RequestBody LaptopScreenDTO laptopScreenDTO){
-        return new ApiResponse(HttpStatus.OK, "SUCCESS", laptopScreenService.save(laptopScreenDTO));
+        return new ApiResponse(HttpStatus.OK, "SUCCESS", laptopScreenService.update(laptopScreenDTO));
     }
 }

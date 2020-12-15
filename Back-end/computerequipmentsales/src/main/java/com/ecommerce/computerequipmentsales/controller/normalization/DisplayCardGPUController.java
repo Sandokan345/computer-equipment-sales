@@ -32,6 +32,6 @@ public class DisplayCardGPUController {
 
     @PutMapping("/update")
     public ApiResponse update(@RequestBody DisplayCardGPUDTO displayCardGPUDTO){
-        return new ApiResponse(HttpStatus.OK, "SUCCESS", displayCardGPUService.save(displayCardGPUDTO));
+        return new ApiResponse(HttpStatus.OK, "SUCCESS", displayCardGPUService.update(displayCardGPUDTO));
     }
 }

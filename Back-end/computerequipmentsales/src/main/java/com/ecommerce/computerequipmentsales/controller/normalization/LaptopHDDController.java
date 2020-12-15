@@ -32,6 +32,6 @@ public class LaptopHDDController {
 
     @PutMapping("/update")
     public ApiResponse update(@RequestBody LaptopHDDDTO laptopHDDDTO){
-        return new ApiResponse(HttpStatus.OK, "SUCCESS", laptopHDDService.save(laptopHDDDTO));
+        return new ApiResponse(HttpStatus.OK, "SUCCESS", laptopHDDService.update(laptopHDDDTO));
     }
 }

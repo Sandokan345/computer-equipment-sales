@@ -32,6 +32,6 @@ public class ProcessorController {
 
     @PutMapping("/update")
     public ApiResponse update(@RequestBody ProcessorDTO processorDTO){
-        return new ApiResponse(HttpStatus.OK, "SUCCESS", processorService.save(processorDTO));
+        return new ApiResponse(HttpStatus.OK, "SUCCESS", processorService.update(processorDTO));
     }
 }

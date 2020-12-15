@@ -32,6 +32,6 @@ public class LaptopSSDController {
 
     @PutMapping("/update")
     public ApiResponse update(@RequestBody LaptopSSDDTO laptopSSDDTO){
-        return new ApiResponse(HttpStatus.OK, "SUCCESS", laptopSSDService.save(laptopSSDDTO));
+        return new ApiResponse(HttpStatus.OK, "SUCCESS", laptopSSDService.update(laptopSSDDTO));
     }
 }

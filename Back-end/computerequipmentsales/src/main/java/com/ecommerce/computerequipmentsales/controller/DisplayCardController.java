@@ -33,6 +33,6 @@ public class DisplayCardController {
     @PutMapping("/update")
     public ApiResponse update(@RequestBody DisplayCardDTO displayCardDTO){
 
-        return new ApiResponse(HttpStatus.OK, "SUCCESS", displayCardService.save(displayCardDTO));
+        return new ApiResponse(HttpStatus.OK, "SUCCESS", displayCardService.update(displayCardDTO));
     }
 }

@@ -32,6 +32,6 @@ public class HDDController {
 
     @PutMapping("/update")
     public ApiResponse update(@RequestBody HDDDTO hdddto){
-        return new ApiResponse(HttpStatus.OK, "SUCCESS", hddService.save(hdddto));
+        return new ApiResponse(HttpStatus.OK, "SUCCESS", hddService.update(hdddto));
     }
 }

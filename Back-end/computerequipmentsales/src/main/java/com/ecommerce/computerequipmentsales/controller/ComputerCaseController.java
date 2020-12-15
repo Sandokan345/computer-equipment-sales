@@ -33,6 +33,6 @@ public class ComputerCaseController {
 
     @PutMapping("/update")
     public ApiResponse update(@RequestBody ComputerCaseDTO computerCaseDTO){
-        return new ApiResponse(HttpStatus.OK, "SUCCESS", computerCaseService.save(computerCaseDTO));
+        return new ApiResponse(HttpStatus.OK, "SUCCESS", computerCaseService.update(computerCaseDTO));
     }
 }

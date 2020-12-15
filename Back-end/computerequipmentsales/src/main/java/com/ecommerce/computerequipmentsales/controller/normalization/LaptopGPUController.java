@@ -32,6 +32,6 @@ public class LaptopGPUController {
 
     @PutMapping("/update")
     public ApiResponse update(@RequestBody LaptopGPUDTO laptopGPUDTO){
-        return new ApiResponse(HttpStatus.OK, "SUCCESS", laptopGPUService.save(laptopGPUDTO));
+        return new ApiResponse(HttpStatus.OK, "SUCCESS", laptopGPUService.update(laptopGPUDTO));
     }
 }

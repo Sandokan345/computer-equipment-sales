@@ -32,6 +32,6 @@ public class LaptopProcessorController {
 
     @PutMapping("/update")
     public ApiResponse update(@RequestBody LaptopProcessorDTO laptopProcessorDTO){
-        return new ApiResponse(HttpStatus.OK, "SUCCESS", laptopProcessorService.save(laptopProcessorDTO));
+        return new ApiResponse(HttpStatus.OK, "SUCCESS", laptopProcessorService.update(laptopProcessorDTO));
     }
 }

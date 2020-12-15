@@ -32,6 +32,6 @@ public class DisplayCardMemoryController {
 
     @PutMapping("/update")
     public ApiResponse update(@RequestBody DisplayCardMemoryDTO displayCardMemoryDTO){
-        return new ApiResponse(HttpStatus.OK, "SUCCESS", displayCardMemoryService.save(displayCardMemoryDTO));
+        return new ApiResponse(HttpStatus.OK, "SUCCESS", displayCardMemoryService.update(displayCardMemoryDTO));
     }
 }

@@ -32,6 +32,6 @@ public class MonitorScreenController {
 
     @PutMapping("/update")
     public ApiResponse update(@RequestBody MonitorScreenDTO monitorScreenDTO){
-        return new ApiResponse(HttpStatus.OK, "SUCCESS", monitorScreenService.save(monitorScreenDTO));
+        return new ApiResponse(HttpStatus.OK, "SUCCESS", monitorScreenService.update(monitorScreenDTO));
     }
 }

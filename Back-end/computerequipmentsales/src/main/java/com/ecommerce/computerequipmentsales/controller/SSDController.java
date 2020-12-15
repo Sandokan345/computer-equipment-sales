@@ -32,6 +32,6 @@ public class SSDController {
 
     @PutMapping("/update")
     public ApiResponse update(@RequestBody SSDDTO ssddto){
-        return new ApiResponse(HttpStatus.OK, "SUCCESS", ssdService.save(ssddto));
+        return new ApiResponse(HttpStatus.OK, "SUCCESS", ssdService.update(ssddto));
     }
 }

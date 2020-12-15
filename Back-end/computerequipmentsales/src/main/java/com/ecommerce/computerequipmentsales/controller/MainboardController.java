@@ -32,6 +32,6 @@ public class MainboardController {
 
     @PutMapping("/update")
     public ApiResponse update(@RequestBody MainboardDTO mainboardDTO){
-        return new ApiResponse(HttpStatus.OK, "SUCCESS", mainboardService.save(mainboardDTO));
+        return new ApiResponse(HttpStatus.OK, "SUCCESS", mainboardService.update(mainboardDTO));
     }
 }

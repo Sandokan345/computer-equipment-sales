@@ -32,6 +32,6 @@ public class MonitorController {
 
     @PutMapping("/update")
     public ApiResponse update(@RequestBody MonitorDTO monitorDTO){
-        return new ApiResponse(HttpStatus.OK, "SUCCESS", monitorService.save(monitorDTO));
+        return new ApiResponse(HttpStatus.OK, "SUCCESS", monitorService.update(monitorDTO));
     }
 }

@@ -32,6 +32,6 @@ public class StockController {
 
     @PutMapping("/update")
     public ApiResponse update(@RequestBody StockDTO stockDTO){
-        return new ApiResponse(HttpStatus.OK, "SUCCESS", stockService.save(stockDTO));
+        return new ApiResponse(HttpStatus.OK, "SUCCESS", stockService.update(stockDTO));
     }
 }

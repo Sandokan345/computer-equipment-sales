@@ -32,6 +32,6 @@ public class RAMController {
 
     @PutMapping("/update")
     public ApiResponse update(@RequestBody RAMDTO ramdto){
-        return new ApiResponse(HttpStatus.OK, "SUCCESS", ramService.save(ramdto));
+        return new ApiResponse(HttpStatus.OK, "SUCCESS", ramService.update(ramdto));
     }
 }

@@ -32,6 +32,6 @@ public class LaptopRAMController {
 
     @PutMapping("/update")
     public ApiResponse update(@RequestBody LaptopRAMDTO laptopRAMDTO){
-        return new ApiResponse(HttpStatus.OK, "SUCCESS", laptopRAMService.save(laptopRAMDTO));
+        return new ApiResponse(HttpStatus.OK, "SUCCESS", laptopRAMService.update(laptopRAMDTO));
     }
 }

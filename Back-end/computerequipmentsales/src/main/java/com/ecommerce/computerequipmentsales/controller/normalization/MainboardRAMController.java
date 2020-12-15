@@ -32,6 +32,6 @@ public class MainboardRAMController {
 
     @PutMapping("/update")
     public ApiResponse update(@RequestBody MainboardRAMDTO mainboardRAMDTO){
-        return new ApiResponse(HttpStatus.OK, "SUCCESS", mainboardRAMService.save(mainboardRAMDTO));
+        return new ApiResponse(HttpStatus.OK, "SUCCESS", mainboardRAMService.update(mainboardRAMDTO));
     }
 }
