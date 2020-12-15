@@ -13,7 +13,7 @@ public class SSDDTO extends BaseEntityDTO{
 
     private String accessInterface;
 
-    private int chip;
+    private String chip;
 
     private String maxReadingSpeed;
 

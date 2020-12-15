@@ -1,6 +1,5 @@
 package com.ecommerce.computerequipmentsales.entity;
 
-import com.ecommerce.computerequipmentsales.dto.ComputerCaseDTO;
 import com.sun.istack.NotNull;
 import lombok.Data;
 

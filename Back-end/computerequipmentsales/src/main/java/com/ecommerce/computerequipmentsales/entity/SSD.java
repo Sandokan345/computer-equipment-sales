@@ -27,7 +27,7 @@ public class SSD extends BaseEntity{
 
     @NotNull
     @Column(name = "CHIP")
-    private int chip;
+    private String chip;
 
     @NotNull
     @Column(name = "MAX_READING_SPEED")
