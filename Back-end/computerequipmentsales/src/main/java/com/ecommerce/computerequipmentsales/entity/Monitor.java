@@ -36,7 +36,7 @@ public class Monitor extends BaseEntity{
     private MonitorScreen monitorScreen;
 
     @NotNull
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "STOCK_ID")
     private Stock stock;
 }

@@ -52,7 +52,7 @@ public class ComputerCase extends BaseEntity{
     private ComputerCasePSU computerCasePsu;
 
     @NotNull
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "STOCK_ID")
     private Stock stock;
 }

@@ -48,7 +48,7 @@ public class Processor extends BaseEntity{
     private ProcessorCore processorCore;
 
     @NotNull
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "STOCK_ID")
     private Stock stock;
 }

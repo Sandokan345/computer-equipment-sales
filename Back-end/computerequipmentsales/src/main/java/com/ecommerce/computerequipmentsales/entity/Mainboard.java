@@ -48,7 +48,7 @@ public class Mainboard extends BaseEntity{
     private MainboardRAM mainboardRAM;
 
     @NotNull
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "STOCK_ID")
     private Stock stock;
 }

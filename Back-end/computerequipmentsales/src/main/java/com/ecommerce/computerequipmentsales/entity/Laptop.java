@@ -77,7 +77,7 @@ public class Laptop extends BaseEntity{
     private LaptopRAM laptopRAM;
 
     @NotNull
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "STOCK_ID")
     private Stock stock;
 }

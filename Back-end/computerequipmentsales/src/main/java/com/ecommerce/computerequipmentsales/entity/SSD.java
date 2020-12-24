@@ -38,7 +38,7 @@ public class SSD extends BaseEntity{
     private String maxWritingSpeed;
 
     @NotNull
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "STOCK_ID")
     private Stock stock;
 }

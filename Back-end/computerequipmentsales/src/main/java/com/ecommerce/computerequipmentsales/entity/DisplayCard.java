@@ -74,7 +74,7 @@ public class DisplayCard extends BaseEntity{
     private DisplayCardMemory displayCardMemory;
 
     @NotNull
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "STOCK_ID")
     private Stock stock;
 }
