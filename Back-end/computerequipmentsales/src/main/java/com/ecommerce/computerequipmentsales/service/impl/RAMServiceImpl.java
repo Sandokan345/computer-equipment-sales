@@ -29,9 +29,12 @@ public class RAMServiceImpl implements RAMService {
         if(ramdto.getBrand() == null){
             throw new ComputerEquipmentSalesBusinessException(BusinessRule.RAM_NOT_FOUND.getDescription());
         }
-        if(ramdto.getPrice() <= 0){
-            throw new ComputerEquipmentSalesBusinessException(BusinessRule.RAM_NOT_FOUND.getDescription());
+        if(ramdto.getStockId() == null || ramdto.getStockId() < 0){
+            throw new ComputerEquipmentSalesBusinessException(BusinessRule.STOCK_NOT_FOUND.getDescription());
         }
+    }
+
+    private void validateCode(RAMDTO ramdto){
         RAM ramProductCode = ramDao.findOneByProductCode(ramdto.getProductCode());
         if(Optional.ofNullable(ramProductCode).isPresent()){
             throw new ComputerEquipmentSalesBusinessException(BusinessRule.PRODUCT_CODE_IS_USING.getDescription());
@@ -39,9 +42,10 @@ public class RAMServiceImpl implements RAMService {
     }
 
     private void validateRelation(RAMDTO ramdto){
-        if(ramdto.getStockId() == null || ramdto.getStockId() < 0){
-            throw new ComputerEquipmentSalesBusinessException(BusinessRule.STOCK_NOT_FOUND.getDescription());
+        if(ramdto.getPrice() <= 0){
+            throw new ComputerEquipmentSalesBusinessException(BusinessRule.RAM_NOT_FOUND.getDescription());
         }
+
         Optional<Stock> optionalStock = stockDao.findById(ramdto.getStockId());
         if(!optionalStock.isPresent()){
             throw new ComputerEquipmentSalesBusinessException(BusinessRule.STOCK_NOT_FOUND.getDescription());
@@ -52,6 +56,7 @@ public class RAMServiceImpl implements RAMService {
     public RAMDTO save(RAMDTO ramdto) {
         validate(ramdto);
         validateRelation(ramdto);
+        validateCode(ramdto);
         RAM ram = MappingHelper.map(ramdto, RAM.class);
         RAM result = ramDao.save(ram);
         return MappingHelper.map(result, RAMDTO.class);
@@ -59,11 +64,14 @@ public class RAMServiceImpl implements RAMService {
 
     @Override
     public RAMDTO update(RAMDTO ramdto) {
+        validateRelation(ramdto);
         if(ramdto.getId() == null){
             throw new ComputerEquipmentSalesBusinessException(BusinessRule.RAM_NOT_FOUND.getDescription());
         }
         else{
-            return save(ramdto);
+            RAM ram = MappingHelper.map(ramdto, RAM.class);
+            RAM result = ramDao.save(ram);
+            return MappingHelper.map(result, RAMDTO.class);
         }
     }
 

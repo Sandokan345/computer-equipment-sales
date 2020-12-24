@@ -33,25 +33,27 @@ public class ProcessorServiceImpl implements ProcessorService {
         if(processorDTO.getBrand() == null){
             throw new ComputerEquipmentSalesBusinessException(BusinessRule.PROCESSOR_NOT_FOUND.getDescription());
         }
-        if(processorDTO.getPrice() <= 0){
-            throw new ComputerEquipmentSalesBusinessException(BusinessRule.PROCESSOR_NOT_FOUND.getDescription());
+        if(processorDTO.getProcessorCoreId() == null || processorDTO.getProcessorCoreId() < 0){
+            throw new ComputerEquipmentSalesBusinessException(BusinessRule.PROCESSOR_CORE_NOT_FOUND.getDescription());
         }
+        if(processorDTO.getStockId() == null || processorDTO.getStockId() < 0){
+            throw new ComputerEquipmentSalesBusinessException(BusinessRule.STOCK_NOT_FOUND.getDescription());
+        }
+    }
+
+    private void validateCode(ProcessorDTO processorDTO){
         Processor processorProductCode = processorDao.findOneByProductCode(processorDTO.getProductCode());
         if(Optional.ofNullable(processorProductCode).isPresent()){
             throw new ComputerEquipmentSalesBusinessException(BusinessRule.PRODUCT_CODE_IS_USING.getDescription());
         }
     }
-
     private void validateRelation(ProcessorDTO processorDTO){
-        if(processorDTO.getProcessorCoreId() == null || processorDTO.getProcessorCoreId() < 0){
-            throw new ComputerEquipmentSalesBusinessException(BusinessRule.PROCESSOR_CORE_NOT_FOUND.getDescription());
+        if(processorDTO.getPrice() <= 0){
+            throw new ComputerEquipmentSalesBusinessException(BusinessRule.PROCESSOR_NOT_FOUND.getDescription());
         }
         Optional<ProcessorCore> optionalProcessorCore = processorCoreDao.findById(processorDTO.getProcessorCoreId());
         if(!optionalProcessorCore.isPresent()){
             throw new ComputerEquipmentSalesBusinessException(BusinessRule.PROCESSOR_CORE_NOT_FOUND.getDescription());
-        }
-        if(processorDTO.getStockId() == null || processorDTO.getStockId() < 0){
-            throw new ComputerEquipmentSalesBusinessException(BusinessRule.STOCK_NOT_FOUND.getDescription());
         }
         Optional<Stock> optionalStock = stockDao.findById(processorDTO.getStockId());
         if(!optionalStock.isPresent()){
@@ -63,6 +65,7 @@ public class ProcessorServiceImpl implements ProcessorService {
     public ProcessorDTO save(ProcessorDTO processorDTO) {
         validate(processorDTO);
         validateRelation(processorDTO);
+        validateCode(processorDTO);
         Processor processor = MappingHelper.map(processorDTO, Processor.class);
         Processor result = processorDao.save(processor);
         return MappingHelper.map(result, ProcessorDTO.class);
@@ -70,12 +73,14 @@ public class ProcessorServiceImpl implements ProcessorService {
 
     @Override
     public ProcessorDTO update(ProcessorDTO processorDTO) {
+        validateRelation(processorDTO);
         if(processorDTO.getId() == null){
             throw new ComputerEquipmentSalesBusinessException(BusinessRule.PROCESSOR_NOT_FOUND.getDescription());
         }
         else{
-            return save(processorDTO);
-        }
+            Processor processor = MappingHelper.map(processorDTO, Processor.class);
+            Processor result = processorDao.save(processor);
+            return MappingHelper.map(result, ProcessorDTO.class);        }
     }
 
     @Override

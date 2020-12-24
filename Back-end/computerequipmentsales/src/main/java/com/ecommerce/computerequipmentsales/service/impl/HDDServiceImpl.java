@@ -29,9 +29,12 @@ public class HDDServiceImpl implements HDDService {
         if(hdddto.getBrand() == null){
             throw new ComputerEquipmentSalesBusinessException(BusinessRule.HDD_NOT_FOUND.getDescription());
         }
-        if(hdddto.getPrice() <= 0){
-            throw new ComputerEquipmentSalesBusinessException(BusinessRule.HDD_NOT_FOUND.getDescription());
+        if(hdddto.getStockId() == null || hdddto.getStockId() < 0){
+            throw new ComputerEquipmentSalesBusinessException(BusinessRule.STOCK_NOT_FOUND.getDescription());
         }
+    }
+
+    private void validateCode(HDDDTO hdddto){
         HDD hddProductCode = hddDao.findOneByProductCode(hdddto.getProductCode());
         if(Optional.ofNullable(hddProductCode).isPresent()){
             throw new ComputerEquipmentSalesBusinessException(BusinessRule.PRODUCT_CODE_IS_USING.getDescription());
@@ -39,18 +42,20 @@ public class HDDServiceImpl implements HDDService {
     }
 
     private void validateRelation(HDDDTO hdddto){
-        if(hdddto.getStockId() == null || hdddto.getStockId() < 0){
-            throw new ComputerEquipmentSalesBusinessException(BusinessRule.STOCK_NOT_FOUND.getDescription());
-        }
         Optional<Stock> optionalStock = stockDao.findById(hdddto.getStockId());
         if(!optionalStock.isPresent()){
             throw new ComputerEquipmentSalesBusinessException(BusinessRule.STOCK_NOT_FOUND.getDescription());
+        }
+        if(hdddto.getPrice() <= 0){
+            throw new ComputerEquipmentSalesBusinessException(BusinessRule.HDD_NOT_FOUND.getDescription());
         }
     }
 
     @Override
     public HDDDTO save(HDDDTO hdddto) {
         validate(hdddto);
+        validateCode(hdddto);
+        validateRelation(hdddto);
         HDD hdd = MappingHelper.map(hdddto, HDD.class);
         HDD result = hddDao.save(hdd);
         return MappingHelper.map(result, HDDDTO.class);
@@ -58,11 +63,14 @@ public class HDDServiceImpl implements HDDService {
 
     @Override
     public HDDDTO update(HDDDTO hdddto) {
+        validateRelation(hdddto);
         if(hdddto.getId() == null){
             throw new ComputerEquipmentSalesBusinessException(BusinessRule.HDD_NOT_FOUND.getDescription());
         }
         else{
-            return save(hdddto);
+            HDD hdd = MappingHelper.map(hdddto, HDD.class);
+            HDD result = hddDao.save(hdd);
+            return MappingHelper.map(result, HDDDTO.class);
         }
     }
 

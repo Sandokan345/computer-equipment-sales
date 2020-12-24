@@ -34,9 +34,15 @@ public class MainboardServiceImpl implements MainboardService {
         if(mainboardDTO.getBrand() == null){
             throw new ComputerEquipmentSalesBusinessException(BusinessRule.MAINBOARD_NOT_FOUND.getDescription());
         }
-        if(mainboardDTO.getPrice() <= 0){
-            throw new ComputerEquipmentSalesBusinessException(BusinessRule.MAINBOARD_NOT_FOUND.getDescription());
+        if(mainboardDTO.getMainboardRAMId() == null || mainboardDTO.getMainboardRAMId() < 0){
+            throw new ComputerEquipmentSalesBusinessException(BusinessRule.MAINBOARD_RAM_NOT_FOUND.getDescription());
         }
+        if(mainboardDTO.getStockId() == null || mainboardDTO.getStockId() < 0){
+            throw new ComputerEquipmentSalesBusinessException(BusinessRule.STOCK_NOT_FOUND.getDescription());
+        }
+    }
+
+    private void validateCode(MainboardDTO mainboardDTO){
         Mainboard mainboardProductCode = mainboardDao.findOneByProductCode(mainboardDTO.getProductCode());
         if(Optional.ofNullable(mainboardProductCode).isPresent()){
             throw new ComputerEquipmentSalesBusinessException(BusinessRule.PRODUCT_CODE_IS_USING.getDescription());
@@ -44,15 +50,12 @@ public class MainboardServiceImpl implements MainboardService {
     }
 
     private void validateRelation(MainboardDTO mainboardDTO){
-        if(mainboardDTO.getMainboardRAMId() == null || mainboardDTO.getMainboardRAMId() < 0){
-            throw new ComputerEquipmentSalesBusinessException(BusinessRule.MAINBOARD_RAM_NOT_FOUND.getDescription());
+        if(mainboardDTO.getPrice() <= 0){
+            throw new ComputerEquipmentSalesBusinessException(BusinessRule.MAINBOARD_NOT_FOUND.getDescription());
         }
         Optional<MainboardRAM> optionalMainboardRAM = mainboardRAMDao.findById(mainboardDTO.getMainboardRAMId());
         if(!optionalMainboardRAM.isPresent()){
             throw new ComputerEquipmentSalesBusinessException(BusinessRule.MAINBOARD_RAM_NOT_FOUND.getDescription());
-        }
-        if(mainboardDTO.getStockId() == null || mainboardDTO.getStockId() < 0){
-            throw new ComputerEquipmentSalesBusinessException(BusinessRule.STOCK_NOT_FOUND.getDescription());
         }
         Optional<Stock> optionalStock = stockDao.findById(mainboardDTO.getStockId());
         if(!optionalStock.isPresent()){
@@ -63,6 +66,7 @@ public class MainboardServiceImpl implements MainboardService {
     public MainboardDTO save(MainboardDTO mainboardDTO) {
         validate(mainboardDTO);
         validateRelation(mainboardDTO);
+        validateCode(mainboardDTO);
         Mainboard mainboard = MappingHelper.map(mainboardDTO, Mainboard.class);
         Mainboard result = mainboardDao.save(mainboard);
         return MappingHelper.map(result, MainboardDTO.class);
@@ -70,11 +74,14 @@ public class MainboardServiceImpl implements MainboardService {
 
     @Override
     public MainboardDTO update(MainboardDTO mainboardDTO) {
+        validateRelation(mainboardDTO);
         if(mainboardDTO.getId() == null){
                 throw new ComputerEquipmentSalesBusinessException(BusinessRule.MAINBOARD_NOT_FOUND.getDescription());
         }
         else{
-            return save(mainboardDTO);
+            Mainboard mainboard = MappingHelper.map(mainboardDTO, Mainboard.class);
+            Mainboard result = mainboardDao.save(mainboard);
+            return MappingHelper.map(result, MainboardDTO.class);
         }
     }
 

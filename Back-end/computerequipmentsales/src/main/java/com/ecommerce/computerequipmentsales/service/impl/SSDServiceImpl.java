@@ -29,18 +29,20 @@ public class SSDServiceImpl implements SSDService {
         if(ssddto.getBrand() == null){
             throw new ComputerEquipmentSalesBusinessException(BusinessRule.SSD_NOT_FOUND.getDescription());
         }
-        if(ssddto.getPrice() <= 0){
-            throw new ComputerEquipmentSalesBusinessException(BusinessRule.SSD_NOT_FOUND.getDescription());
+        if(ssddto.getStockId() == null || ssddto.getStockId() < 0){
+            throw new ComputerEquipmentSalesBusinessException(BusinessRule.STOCK_NOT_FOUND.getDescription());
         }
+    }
+
+    private void validateCode(SSDDTO ssddto){
         SSD ssdProductCode = ssdDao.findOneByProductCode(ssddto.getProductCode());
         if(Optional.ofNullable(ssdProductCode).isPresent()){
             throw new ComputerEquipmentSalesBusinessException(BusinessRule.PRODUCT_CODE_IS_USING.getDescription());
         }
     }
-
     private void validateRelation(SSDDTO ssddto){
-        if(ssddto.getStockId() == null || ssddto.getStockId() < 0){
-            throw new ComputerEquipmentSalesBusinessException(BusinessRule.STOCK_NOT_FOUND.getDescription());
+        if(ssddto.getPrice() <= 0){
+            throw new ComputerEquipmentSalesBusinessException(BusinessRule.SSD_NOT_FOUND.getDescription());
         }
         Optional<Stock> optionalStock = stockDao.findById(ssddto.getStockId());
         if(!optionalStock.isPresent()){
@@ -52,6 +54,7 @@ public class SSDServiceImpl implements SSDService {
     public SSDDTO save(SSDDTO ssddto) {
         validate(ssddto);
         validateRelation(ssddto);
+        validateCode(ssddto);
         SSD ssd = MappingHelper.map(ssddto, SSD.class);
         SSD result = ssdDao.save(ssd);
         return MappingHelper.map(result, SSDDTO.class);
@@ -63,7 +66,9 @@ public class SSDServiceImpl implements SSDService {
             throw new ComputerEquipmentSalesBusinessException(BusinessRule.SSD_NOT_FOUND.getDescription());
         }
         else{
-            return save(ssddto);
+            SSD ssd = MappingHelper.map(ssddto, SSD.class);
+            SSD result = ssdDao.save(ssd);
+            return MappingHelper.map(result, SSDDTO.class);
         }
     }
 

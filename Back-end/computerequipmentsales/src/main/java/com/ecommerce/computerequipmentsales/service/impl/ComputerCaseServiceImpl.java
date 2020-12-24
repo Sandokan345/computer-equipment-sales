@@ -33,9 +33,15 @@ public class ComputerCaseServiceImpl implements ComputerCaseService {
         if(computerCaseDTO.getBrand() == null){
             throw new ComputerEquipmentSalesBusinessException(BusinessRule.COMPUTER_CASE_NOT_FOUND.getDescription());
         }
-        if(computerCaseDTO.getPrice() <= 0){
-            throw new ComputerEquipmentSalesBusinessException(BusinessRule.COMPUTER_CASE_NOT_FOUND.getDescription());
+        if(computerCaseDTO.getComputerCasePsuId() == null || computerCaseDTO.getComputerCasePsuId() < 0){
+            throw new ComputerEquipmentSalesBusinessException(BusinessRule.COMPUTER_CASE_PSU_NOT_FOUND.getDescription());
         }
+        if(computerCaseDTO.getStockId() == null || computerCaseDTO.getStockId() < 0){
+            throw new ComputerEquipmentSalesBusinessException(BusinessRule.STOCK_NOT_FOUND.getDescription());
+        }
+    }
+
+    private void validateCode(ComputerCaseDTO computerCaseDTO){
         ComputerCase computerCaseProductCode = computerCaseDao.findOneByProductCode(computerCaseDTO.getProductCode());
         if(Optional.ofNullable(computerCaseProductCode).isPresent()){
             throw new ComputerEquipmentSalesBusinessException(BusinessRule.PRODUCT_CODE_IS_USING.getDescription());
@@ -43,25 +49,24 @@ public class ComputerCaseServiceImpl implements ComputerCaseService {
     }
 
     private void validateRelation(ComputerCaseDTO computerCaseDTO){
-        if(computerCaseDTO.getComputerCasePsuId() == null || computerCaseDTO.getComputerCasePsuId() < 0){
-            throw new ComputerEquipmentSalesBusinessException(BusinessRule.COMPUTER_CASE_PSU_NOT_FOUND.getDescription());
-        }
         Optional<ComputerCasePSU> optionalComputerCasePSU = computerCasePSUDao.findById(computerCaseDTO.getComputerCasePsuId());
         if(!optionalComputerCasePSU.isPresent()){
             throw new ComputerEquipmentSalesBusinessException(BusinessRule.COMPUTER_CASE_PSU_NOT_FOUND.getDescription());
-        }
-        if(computerCaseDTO.getStockId() == null || computerCaseDTO.getStockId() < 0){
-            throw new ComputerEquipmentSalesBusinessException(BusinessRule.STOCK_NOT_FOUND.getDescription());
         }
         Optional<Stock> optionalStock = stockDao.findById(computerCaseDTO.getStockId());
         if(!optionalStock.isPresent()){
             throw new ComputerEquipmentSalesBusinessException(BusinessRule.STOCK_NOT_FOUND.getDescription());
         }
+        if(computerCaseDTO.getPrice() <= 0){
+            throw new ComputerEquipmentSalesBusinessException(BusinessRule.COMPUTER_CASE_NOT_FOUND.getDescription());
+        }
     }
+
     @Override
     public ComputerCaseDTO save(ComputerCaseDTO computerCaseDTO) {
         validate(computerCaseDTO);
         validateRelation(computerCaseDTO);
+        validateCode(computerCaseDTO);
         ComputerCase computerCase = MappingHelper.map(computerCaseDTO, ComputerCase.class);
         ComputerCase result = computerCaseDao.save(computerCase);
         return MappingHelper.map(result, ComputerCaseDTO.class);
@@ -69,11 +74,14 @@ public class ComputerCaseServiceImpl implements ComputerCaseService {
 
     @Override
     public ComputerCaseDTO update(ComputerCaseDTO computerCaseDTO) {
+        validateRelation(computerCaseDTO);
         if(computerCaseDTO.getId() == null){
             throw new ComputerEquipmentSalesBusinessException(BusinessRule.COMPUTER_CASE_NOT_FOUND.getDescription());
         }
         else{
-            return save(computerCaseDTO);
+            ComputerCase computerCase = MappingHelper.map(computerCaseDTO, ComputerCase.class);
+            ComputerCase result = computerCaseDao.save(computerCase);
+            return MappingHelper.map(result, ComputerCaseDTO.class);
         }
     }
 

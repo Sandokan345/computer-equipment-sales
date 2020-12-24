@@ -44,9 +44,30 @@ public class LaptopServiceImpl implements LaptopService {
         if(laptopDTO.getBrand() == null){
             throw new ComputerEquipmentSalesBusinessException(BusinessRule.LAPTOP_NOT_FOUND.getDescription());
         }
-        if(laptopDTO.getPrice() <= 0){
-            throw new ComputerEquipmentSalesBusinessException(BusinessRule.LAPTOP_NOT_FOUND.getDescription());
+        if(laptopDTO.getLaptopScreenId() == null || laptopDTO.getLaptopScreenId() < 0){
+            throw new ComputerEquipmentSalesBusinessException(BusinessRule.LAPTOP_SCREEN_NOT_FOUND.getDescription());
         }
+        if(laptopDTO.getLaptopSSDId() == null || laptopDTO.getLaptopSSDId() < 0){
+            throw new ComputerEquipmentSalesBusinessException(BusinessRule.LAPTOP_SSD_NOT_FOUND.getDescription());
+        }
+        if(laptopDTO.getLaptopHDDId() == null || laptopDTO.getLaptopHDDId() < 0){
+            throw new ComputerEquipmentSalesBusinessException(BusinessRule.LAPTOP_HDD_NOT_FOUND.getDescription());
+        }
+        if(laptopDTO.getLaptopGPUId() == null || laptopDTO.getLaptopGPUId() < 0){
+            throw new ComputerEquipmentSalesBusinessException(BusinessRule.LAPTOP_GPU_NOT_FOUND.getDescription());
+        }
+        if(laptopDTO.getLaptopProcessorId() == null || laptopDTO.getLaptopProcessorId() < 0){
+            throw new ComputerEquipmentSalesBusinessException(BusinessRule.LAPTOP_PROCESSOR_NOT_FOUND.getDescription());
+        }
+        if(laptopDTO.getLaptopRAMId() == null || laptopDTO.getLaptopRAMId() < 0){
+            throw new ComputerEquipmentSalesBusinessException(BusinessRule.LAPTOP_RAM_NOT_FOUND.getDescription());
+        }
+        if(laptopDTO.getStockId() == null || laptopDTO.getStockId() < 0){
+            throw new ComputerEquipmentSalesBusinessException(BusinessRule.STOCK_NOT_FOUND.getDescription());
+        }
+    }
+
+    private void validateCode(LaptopDTO laptopDTO){
         Laptop laptopProductCode = laptopDao.findOneByProductCode(laptopDTO.getProductCode());
         if(Optional.ofNullable(laptopProductCode).isPresent()){
             throw new ComputerEquipmentSalesBusinessException(BusinessRule.PRODUCT_CODE_IS_USING.getDescription());
@@ -54,50 +75,32 @@ public class LaptopServiceImpl implements LaptopService {
     }
 
     private void validateRelation(LaptopDTO laptopDTO){
-        if(laptopDTO.getLaptopScreenId() == null || laptopDTO.getLaptopScreenId() < 0){
-            throw new ComputerEquipmentSalesBusinessException(BusinessRule.LAPTOP_SCREEN_NOT_FOUND.getDescription());
+        if(laptopDTO.getPrice() <= 0){
+            throw new ComputerEquipmentSalesBusinessException(BusinessRule.LAPTOP_NOT_FOUND.getDescription());
         }
         Optional<LaptopScreen> optionalLaptopScreen = laptopScreenDao.findById(laptopDTO.getLaptopScreenId());
         if(!optionalLaptopScreen.isPresent()){
             throw new ComputerEquipmentSalesBusinessException(BusinessRule.LAPTOP_SCREEN_NOT_FOUND.getDescription());
         }
-        if(laptopDTO.getLaptopSSDId() == null || laptopDTO.getLaptopSSDId() < 0){
-            throw new ComputerEquipmentSalesBusinessException(BusinessRule.LAPTOP_SSD_NOT_FOUND.getDescription());
-        }
         Optional<LaptopSSD> optionalLaptopSSD = laptopSSDDao.findById(laptopDTO.getLaptopSSDId());
         if(!optionalLaptopSSD.isPresent()){
             throw new ComputerEquipmentSalesBusinessException(BusinessRule.LAPTOP_SSD_NOT_FOUND.getDescription());
-        }
-        if(laptopDTO.getLaptopHDDId() == null || laptopDTO.getLaptopHDDId() < 0){
-            throw new ComputerEquipmentSalesBusinessException(BusinessRule.LAPTOP_HDD_NOT_FOUND.getDescription());
         }
         Optional<LaptopHDD> optionalLaptopHDD = laptopHDDDao.findById(laptopDTO.getLaptopHDDId());
         if(!optionalLaptopHDD.isPresent()){
             throw new ComputerEquipmentSalesBusinessException(BusinessRule.LAPTOP_HDD_NOT_FOUND.getDescription());
         }
-        if(laptopDTO.getLaptopGPUId() == null || laptopDTO.getLaptopGPUId() < 0){
-            throw new ComputerEquipmentSalesBusinessException(BusinessRule.LAPTOP_GPU_NOT_FOUND.getDescription());
-        }
         Optional<LaptopGPU> optionalLaptopGPU = laptopGPUDao.findById(laptopDTO.getLaptopGPUId());
         if(!optionalLaptopGPU.isPresent()){
             throw new ComputerEquipmentSalesBusinessException(BusinessRule.LAPTOP_GPU_NOT_FOUND.getDescription());
-        }
-        if(laptopDTO.getLaptopProcessorId() == null || laptopDTO.getLaptopProcessorId() < 0){
-            throw new ComputerEquipmentSalesBusinessException(BusinessRule.LAPTOP_PROCESSOR_NOT_FOUND.getDescription());
         }
         Optional<LaptopProcessor> optionalLaptopProcessor = laptopProcessorDao.findById(laptopDTO.getLaptopProcessorId());
         if(!optionalLaptopProcessor.isPresent()){
             throw new ComputerEquipmentSalesBusinessException(BusinessRule.LAPTOP_PROCESSOR_NOT_FOUND.getDescription());
         }
-        if(laptopDTO.getLaptopRAMId() == null || laptopDTO.getLaptopRAMId() < 0){
-            throw new ComputerEquipmentSalesBusinessException(BusinessRule.LAPTOP_RAM_NOT_FOUND.getDescription());
-        }
         Optional<LaptopRAM> optionalLaptopRAM = laptopRAMDao.findById(laptopDTO.getLaptopRAMId());
         if(!optionalLaptopRAM.isPresent()){
             throw new ComputerEquipmentSalesBusinessException(BusinessRule.LAPTOP_RAM_NOT_FOUND.getDescription());
-        }
-        if(laptopDTO.getStockId() == null || laptopDTO.getStockId() < 0){
-            throw new ComputerEquipmentSalesBusinessException(BusinessRule.STOCK_NOT_FOUND.getDescription());
         }
         Optional<Stock> optionalStock = stockDao.findById(laptopDTO.getStockId());
         if(!optionalStock.isPresent()){
@@ -109,6 +112,7 @@ public class LaptopServiceImpl implements LaptopService {
     public LaptopDTO save(LaptopDTO laptopDTO) {
         validate(laptopDTO);
         validateRelation(laptopDTO);
+        validateCode(laptopDTO);
         Laptop laptop = MappingHelper.map(laptopDTO, Laptop.class);
         Laptop result = laptopDao.save(laptop);
         return MappingHelper.map(result, LaptopDTO.class);
@@ -116,11 +120,14 @@ public class LaptopServiceImpl implements LaptopService {
 
     @Override
     public LaptopDTO update(LaptopDTO laptopDTO) {
+        validateRelation(laptopDTO);
         if(laptopDTO.getId() == null){
             throw new ComputerEquipmentSalesBusinessException(BusinessRule.LAPTOP_NOT_FOUND.getDescription());
         }
         else{
-            return save(laptopDTO);
+            Laptop laptop = MappingHelper.map(laptopDTO, Laptop.class);
+            Laptop result = laptopDao.save(laptop);
+            return MappingHelper.map(result, LaptopDTO.class);
         }
     }
 

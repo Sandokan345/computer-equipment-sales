@@ -38,42 +38,46 @@ public class DisplayCardServiceImpl implements DisplayCardService {
         if(displayCardDTO.getBrand() == null){
             throw new ComputerEquipmentSalesBusinessException(BusinessRule.DISPLAY_CARD_NOT_FOUND.getDescription());
         }
-        if(displayCardDTO.getPrice() <= 0){
-            throw new ComputerEquipmentSalesBusinessException(BusinessRule.DISPLAY_CARD_NOT_FOUND.getDescription());
-        }
-        DisplayCard displayCardProductCode = displayCardDao.findOneByProductCode(displayCardDTO.getProductCode());
-        if(Optional.ofNullable(displayCardProductCode).isPresent()){
-            throw new ComputerEquipmentSalesBusinessException(BusinessRule.PRODUCT_CODE_IS_USING.getDescription());
-        }
-    }
-
-    private void validateRelation(DisplayCardDTO displayCardDTO){
         if(displayCardDTO.getDisplayCardGPUId() == null || displayCardDTO.getDisplayCardGPUId() < 0){
-            throw new ComputerEquipmentSalesBusinessException(BusinessRule.DISPLAY_CARD_GPU_NOT_FOUND.getDescription());
-        }
-        Optional<DisplayCardGPU> optionalDisplayCardGPU = displayCardGPUDao.findById(displayCardDTO.getDisplayCardGPUId());
-        if(!optionalDisplayCardGPU.isPresent()){
             throw new ComputerEquipmentSalesBusinessException(BusinessRule.DISPLAY_CARD_GPU_NOT_FOUND.getDescription());
         }
         if(displayCardDTO.getDisplayCardMemoryId() == null || displayCardDTO.getDisplayCardMemoryId() < 0){
             throw new ComputerEquipmentSalesBusinessException(BusinessRule.DISPLAY_CARD_MEMORY_NOT_FOUND.getDescription());
         }
+        if(displayCardDTO.getStockId() == null || displayCardDTO.getStockId() <0){
+            throw new ComputerEquipmentSalesBusinessException(BusinessRule.STOCK_NOT_FOUND.getDescription());
+        }
+    }
+
+    private void validateCode(DisplayCardDTO displayCardDTO){
+        DisplayCard displayCardProductCode = displayCardDao.findOneByProductCode(displayCardDTO.getProductCode());
+        if(Optional.ofNullable(displayCardProductCode).isPresent()){
+            throw new ComputerEquipmentSalesBusinessException(BusinessRule.PRODUCT_CODE_IS_USING.getDescription());
+        }
+    }
+    private void validateRelation(DisplayCardDTO displayCardDTO){
+        Optional<DisplayCardGPU> optionalDisplayCardGPU = displayCardGPUDao.findById(displayCardDTO.getDisplayCardGPUId());
+        if(!optionalDisplayCardGPU.isPresent()){
+            throw new ComputerEquipmentSalesBusinessException(BusinessRule.DISPLAY_CARD_GPU_NOT_FOUND.getDescription());
+        }
         Optional<DisplayCardMemory> optionalDisplayCardMemory = displayCardMemoryDao.findById(displayCardDTO.getDisplayCardMemoryId());
         if(!optionalDisplayCardMemory.isPresent()){
             throw new ComputerEquipmentSalesBusinessException(BusinessRule.DISPLAY_CARD_MEMORY_NOT_FOUND.getDescription());
-        }
-        if(displayCardDTO.getStockId() == null || displayCardDTO.getStockId() <0){
-            throw new ComputerEquipmentSalesBusinessException(BusinessRule.STOCK_NOT_FOUND.getDescription());
         }
         Optional<Stock> optionalStock = stockDao.findById(displayCardDTO.getStockId());
         if(!optionalStock.isPresent()){
             throw new ComputerEquipmentSalesBusinessException(BusinessRule.STOCK_NOT_FOUND.getDescription());
         }
+        if(displayCardDTO.getPrice() <= 0){
+            throw new ComputerEquipmentSalesBusinessException(BusinessRule.DISPLAY_CARD_NOT_FOUND.getDescription());
+        }
     }
+
     @Override
     public DisplayCardDTO save(DisplayCardDTO displayCardDTO) {
         validate(displayCardDTO);
         validateRelation(displayCardDTO);
+        validateCode(displayCardDTO);
         DisplayCard displayCard = MappingHelper.map(displayCardDTO, DisplayCard.class);
         DisplayCard result = displayCardDao.save(displayCard);
         return MappingHelper.map(result, DisplayCardDTO.class);
@@ -81,11 +85,14 @@ public class DisplayCardServiceImpl implements DisplayCardService {
 
     @Override
     public DisplayCardDTO update(DisplayCardDTO displayCardDTO) {
+        validateRelation(displayCardDTO);
         if(displayCardDTO.getId() == null){
             throw new ComputerEquipmentSalesBusinessException(BusinessRule.DISPLAY_CARD_NOT_FOUND.getDescription());
         }
         else{
-            return save(displayCardDTO);
+            DisplayCard displayCard = MappingHelper.map(displayCardDTO, DisplayCard.class);
+            DisplayCard result = displayCardDao.save(displayCard);
+            return MappingHelper.map(result, DisplayCardDTO.class);
         }
     }
 

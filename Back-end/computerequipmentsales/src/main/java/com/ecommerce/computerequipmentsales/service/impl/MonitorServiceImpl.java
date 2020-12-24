@@ -33,9 +33,15 @@ public class MonitorServiceImpl implements MonitorService {
         if(monitorDTO.getBrand() == null){
             throw new ComputerEquipmentSalesBusinessException(BusinessRule.MONITOR_NOT_FOUND.getDescription());
         }
-        if(monitorDTO.getPrice() <= 0){
-            throw new ComputerEquipmentSalesBusinessException(BusinessRule.MONITOR_NOT_FOUND.getDescription());
+        if(monitorDTO.getMonitorScreenId() == null || monitorDTO.getMonitorScreenId() < 0){
+            throw new ComputerEquipmentSalesBusinessException(BusinessRule.MONITOR_SCREEN_NOT_FOUND.getDescription());
         }
+        if(monitorDTO.getStockId() == null || monitorDTO.getStockId() < 0){
+            throw new ComputerEquipmentSalesBusinessException(BusinessRule.STOCK_NOT_FOUND.getDescription());
+        }
+    }
+
+    private void validateCode(MonitorDTO monitorDTO){
         Monitor monitorProductCode = monitorDao.findOneByProductCode(monitorDTO.getProductCode());
         if(Optional.ofNullable(monitorProductCode).isPresent()){
             throw new ComputerEquipmentSalesBusinessException(BusinessRule.PRODUCT_CODE_IS_USING.getDescription());
@@ -43,15 +49,12 @@ public class MonitorServiceImpl implements MonitorService {
     }
 
     private void validateRelation(MonitorDTO monitorDTO){
-        if(monitorDTO.getMonitorScreenId() == null || monitorDTO.getMonitorScreenId() < 0){
-            throw new ComputerEquipmentSalesBusinessException(BusinessRule.MONITOR_SCREEN_NOT_FOUND.getDescription());
+        if(monitorDTO.getPrice() <= 0){
+            throw new ComputerEquipmentSalesBusinessException(BusinessRule.MONITOR_NOT_FOUND.getDescription());
         }
         Optional<MonitorScreen> optionalMonitorScreen = monitorScreenDao.findById(monitorDTO.getMonitorScreenId());
         if(!optionalMonitorScreen.isPresent()){
             throw new ComputerEquipmentSalesBusinessException(BusinessRule.MONITOR_SCREEN_NOT_FOUND.getDescription());
-        }
-        if(monitorDTO.getStockId() == null || monitorDTO.getStockId() < 0){
-            throw new ComputerEquipmentSalesBusinessException(BusinessRule.STOCK_NOT_FOUND.getDescription());
         }
         Optional<Stock> optionalStock = stockDao.findById(monitorDTO.getStockId());
         if(!optionalStock.isPresent()){
@@ -62,6 +65,7 @@ public class MonitorServiceImpl implements MonitorService {
     public MonitorDTO save(MonitorDTO monitorDTO) {
         validate(monitorDTO);
         validateRelation(monitorDTO);
+        validateCode(monitorDTO);
         Monitor monitor = MappingHelper.map(monitorDTO, Monitor.class);
         Monitor result = monitorDao.save(monitor);
         return MappingHelper.map(result, MonitorDTO.class);
@@ -69,11 +73,14 @@ public class MonitorServiceImpl implements MonitorService {
 
     @Override
     public MonitorDTO update(MonitorDTO monitorDTO) {
+        validateRelation(monitorDTO);
         if(monitorDTO.getId() == null){
             throw new ComputerEquipmentSalesBusinessException(BusinessRule.MONITOR_NOT_FOUND.getDescription());
         }
         else{
-            return save(monitorDTO);
+            Monitor monitor = MappingHelper.map(monitorDTO, Monitor.class);
+            Monitor result = monitorDao.save(monitor);
+            return MappingHelper.map(result, MonitorDTO.class);
         }
     }
 
