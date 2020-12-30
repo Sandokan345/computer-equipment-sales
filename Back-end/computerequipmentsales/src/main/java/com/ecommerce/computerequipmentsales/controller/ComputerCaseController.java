@@ -16,6 +16,7 @@ public class ComputerCaseController {
     @Autowired
     private ComputerCaseService computerCaseService;
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/list")
     public ApiResponse findAll(){
         return new ApiResponse(HttpStatus.OK, "SUCCESS", computerCaseService.findAll());
