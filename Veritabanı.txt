@@ -410,12 +410,12 @@ LaptopScreen
 LaptopSSD
 {
   "ssd": false,
-  "ssdCapacity": null,
+  "ssdCapacity": null
 }
 ********************************************************
 {
   "ssd": true,
-  "ssdCapacity": "512GB",
+  "ssdCapacity": "512GB"
 }
 ////////////////////////////////////////////////////////
 MainboardRam
@@ -423,25 +423,25 @@ MainboardRam
   "ramSlotAmount": 2,
   "maxRamSupport": "32GB",
   "ramType": "DDR4",
-  "ramFrequencySpeed": "3600 MHz, 3466 MHz, 3200 MHz, 2933 MHz, 2666 MHz, 2400 MHz, 2133 MHz",
+  "ramFrequencySpeed": "3600 MHz, 3466 MHz, 3200 MHz, 2933 MHz, 2666 MHz, 2400 MHz, 2133 MHz"
 }
 ********************************************************
 {
   "ramSlotAmount": 2,
   "maxRamSupport": "32GB",
   "ramType": "DDR4",
-  "ramFrequencySpeed": "2933 MHz",
+  "ramFrequencySpeed": "2933 MHz"
 }
 ////////////////////////////////////////////////////////
 ProcessorCore
 {
   "coreAmount": 6,
-  "coreName": "Ryzen",
+  "coreName": "Ryzen"
 }
 ********************************************************
 {
   "coreAmount": 6,
-  "coreName": "Coffee Lake",
+  "coreName": "Coffee Lake"
 }
 ////////////////////////////////////////////////////////
 Stock
