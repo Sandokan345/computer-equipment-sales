@@ -15,11 +15,13 @@ public class LaptopGPUController {
     @Autowired
     private LaptopGPUService laptopGPUService;
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/list")
     public ApiResponse findAll(){
         return new ApiResponse(HttpStatus.OK, "SUCCESS", laptopGPUService.findAll());
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/save")
     public ApiResponse save(@RequestBody LaptopGPUDTO laptopGPUDTO){
         return new ApiResponse(HttpStatus.OK, "SUCCESS", laptopGPUService.save(laptopGPUDTO));

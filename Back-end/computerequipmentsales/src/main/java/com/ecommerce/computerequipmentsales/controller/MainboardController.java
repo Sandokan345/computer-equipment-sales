@@ -15,11 +15,13 @@ public class MainboardController {
     @Autowired
     private MainboardService mainboardService;
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/list")
     public ApiResponse findAll(){
         return new ApiResponse(HttpStatus.OK, "SUCCESS", mainboardService.findAll());
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/save")
     public ApiResponse save(@RequestBody MainboardDTO mainboardDTO){
         return new ApiResponse(HttpStatus.OK, "SUCCESS", mainboardService.save(mainboardDTO));

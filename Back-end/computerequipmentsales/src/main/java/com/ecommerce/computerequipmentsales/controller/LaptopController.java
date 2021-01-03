@@ -15,11 +15,13 @@ public class LaptopController {
     @Autowired
     private LaptopService laptopService;
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/list")
     public ApiResponse findAll(){
         return new ApiResponse(HttpStatus.OK, "SUCCESS", laptopService.findAll());
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/save")
     public ApiResponse save(@RequestBody LaptopDTO laptopDTO){
         return new ApiResponse(HttpStatus.OK, "SUCCESS", laptopService.save(laptopDTO));

@@ -15,11 +15,13 @@ public class LaptopRAMController {
     @Autowired
     private LaptopRAMService laptopRAMService;
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/list")
     public ApiResponse findAll(){
         return new ApiResponse(HttpStatus.OK, "SUCCESS", laptopRAMService.findAll());
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/save")
     public ApiResponse save(@RequestBody LaptopRAMDTO laptopRAMDTO){
         return new ApiResponse(HttpStatus.OK, "SUCCESS", laptopRAMService.save(laptopRAMDTO));

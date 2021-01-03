@@ -15,11 +15,13 @@ public class DisplayCardGPUController {
     @Autowired
     private DisplayCardGPUService displayCardGPUService;
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/list")
     public ApiResponse findAll(){
         return new ApiResponse(HttpStatus.OK, "SUCCESS", displayCardGPUService.findAll());
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/save")
     public ApiResponse save(@RequestBody DisplayCardGPUDTO displayCardGPUDTO){
         return new ApiResponse(HttpStatus.OK, "SUCCESS", displayCardGPUService.save(displayCardGPUDTO));

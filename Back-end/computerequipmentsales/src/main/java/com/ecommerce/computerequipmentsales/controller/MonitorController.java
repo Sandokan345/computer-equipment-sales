@@ -15,11 +15,13 @@ public class MonitorController {
     @Autowired
     private MonitorService monitorService;
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/list")
     public ApiResponse findAll(){
         return new ApiResponse(HttpStatus.OK, "SUCCESS", monitorService.findAll());
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/save")
     public ApiResponse save(@RequestBody MonitorDTO monitorDTO){
         return new ApiResponse(HttpStatus.OK, "SUCCESS", monitorService.save(monitorDTO));

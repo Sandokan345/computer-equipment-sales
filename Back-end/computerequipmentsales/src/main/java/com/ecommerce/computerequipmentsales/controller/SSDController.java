@@ -15,11 +15,13 @@ public class SSDController {
     @Autowired
     private SSDService ssdService;
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/list")
     public ApiResponse findAll(){
         return new ApiResponse(HttpStatus.OK, "SUCCESS", ssdService.findAll());
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/save")
     public ApiResponse save(@RequestBody SSDDTO ssddto){
         return new ApiResponse(HttpStatus.OK, "SUCCESS", ssdService.save(ssddto));

@@ -15,11 +15,13 @@ public class MainboardRAMController {
     @Autowired
     private MainboardRAMService mainboardRAMService;
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/list")
     public ApiResponse findAll(){
         return new ApiResponse(HttpStatus.OK, "SUCCESS", mainboardRAMService.findAll());
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/save")
     public ApiResponse save(@RequestBody MainboardRAMDTO mainboardRAMDTO){
         return new ApiResponse(HttpStatus.OK, "SUCCESS", mainboardRAMService.save(mainboardRAMDTO));

@@ -45,6 +45,18 @@ public class ComputerCasePSUServiceImpl implements ComputerCasePSUService {
     }
 
     @Override
+    public ComputerCasePSUDTO findOne(Long id){
+        Optional<ComputerCasePSU> optionalComputerCasePSU = computerCasePSUDao.findById(id);
+        if(optionalComputerCasePSU.isPresent()){
+            ComputerCasePSU computerCasePSU = optionalComputerCasePSU.get();
+            return MappingHelper.map(computerCasePSU, ComputerCasePSUDTO.class);
+        }
+        else{
+            throw new ComputerEquipmentSalesBusinessException(BusinessRule.COMPUTER_CASE_PSU_NOT_FOUND.getDescription());
+        }
+    }
+
+    @Override
     public void delete(Long id) {
         ComputerCasePSU computerCasePSU = getById(id);
         computerCasePSUDao.delete(computerCasePSU);

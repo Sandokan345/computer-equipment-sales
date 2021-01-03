@@ -15,11 +15,13 @@ public class LaptopScreenController {
     @Autowired
     private LaptopScreenService laptopScreenService;
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/list")
     public ApiResponse findAll(){
         return new ApiResponse(HttpStatus.OK, "SUCCESS", laptopScreenService.findAll());
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/save")
     public ApiResponse save(@RequestBody LaptopScreenDTO laptopScreenDTO){
         return new ApiResponse(HttpStatus.OK, "SUCCESS", laptopScreenService.save(laptopScreenDTO));

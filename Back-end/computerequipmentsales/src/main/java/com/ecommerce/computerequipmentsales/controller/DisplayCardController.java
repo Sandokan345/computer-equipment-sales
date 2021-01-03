@@ -15,11 +15,13 @@ public class DisplayCardController {
     @Autowired
     private DisplayCardService displayCardService;
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/list")
     public ApiResponse findAll(){
         return new ApiResponse(HttpStatus.OK, "SUCCESS", displayCardService.findAll());
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/save")
     public ApiResponse save(@RequestBody DisplayCardDTO displayCardDTO){
         return new ApiResponse(HttpStatus.OK, "SUCCESS", displayCardService.save(displayCardDTO));

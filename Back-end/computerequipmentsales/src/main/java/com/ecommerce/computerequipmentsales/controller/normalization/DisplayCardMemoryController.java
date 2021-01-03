@@ -15,11 +15,13 @@ public class DisplayCardMemoryController {
     @Autowired
     private DisplayCardMemoryService displayCardMemoryService;
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/list")
     public ApiResponse findAll(){
         return new ApiResponse(HttpStatus.OK, "SUCCESS", displayCardMemoryService.findAll());
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/save")
     public ApiResponse save(@RequestBody DisplayCardMemoryDTO displayCardMemoryDTO){
         return new ApiResponse(HttpStatus.OK, "SUCCESS", displayCardMemoryService.save(displayCardMemoryDTO));

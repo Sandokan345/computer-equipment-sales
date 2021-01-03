@@ -22,6 +22,7 @@ public class ComputerCaseController {
         return new ApiResponse(HttpStatus.OK, "SUCCESS", computerCaseService.findAll());
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/save")
     public ApiResponse save(@RequestBody ComputerCaseDTO computerCaseDTO){
         return new ApiResponse(HttpStatus.OK, "SUCCESS", computerCaseService.save(computerCaseDTO));

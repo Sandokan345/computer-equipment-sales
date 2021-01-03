@@ -15,11 +15,13 @@ public class StockController {
     @Autowired
     private StockService stockService;
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/list")
     public ApiResponse findAll(){
         return new ApiResponse(HttpStatus.OK, "SUCCESS", stockService.findAll());
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/save")
     public ApiResponse save(@RequestBody StockDTO stockDTO){
         return new ApiResponse(HttpStatus.OK, "SUCCESS", stockService.save(stockDTO));

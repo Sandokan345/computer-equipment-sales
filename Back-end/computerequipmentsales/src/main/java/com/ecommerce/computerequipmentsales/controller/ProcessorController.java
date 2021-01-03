@@ -15,11 +15,13 @@ public class ProcessorController {
     @Autowired
     private ProcessorService processorService;
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/list")
     public ApiResponse findAll(){
         return new ApiResponse(HttpStatus.OK, "SUCCESS", processorService.findAll());
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/save")
     public ApiResponse save(@RequestBody ProcessorDTO processorDTO){
         return new ApiResponse(HttpStatus.OK, "SUCCESS", processorService.save(processorDTO));

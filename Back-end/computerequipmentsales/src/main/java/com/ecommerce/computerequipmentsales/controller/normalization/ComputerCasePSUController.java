@@ -15,14 +15,22 @@ public class ComputerCasePSUController {
     @Autowired
     private ComputerCasePSUService computerCasePSUService;
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/list")
     public ApiResponse findAll(){
         return new ApiResponse(HttpStatus.OK, "SUCCESS", computerCasePSUService.findAll());
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/save")
     public ApiResponse save(@RequestBody ComputerCasePSUDTO computerCasePSUDTO){
         return new ApiResponse(HttpStatus.OK, "SUCCESS", computerCasePSUService.save(computerCasePSUDTO));
+    }
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping(value = "/{id}")
+    public ApiResponse getComputerCasePSU(@PathVariable Long id){
+        return new ApiResponse(HttpStatus.OK, "SUCCESS", computerCasePSUService.findOne(id));
     }
 
     @DeleteMapping("/{id}")

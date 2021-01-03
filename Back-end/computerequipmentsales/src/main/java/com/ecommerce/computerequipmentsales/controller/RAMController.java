@@ -15,11 +15,13 @@ public class RAMController {
     @Autowired
     private RAMService ramService;
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/list")
     public ApiResponse findAll(){
         return new ApiResponse(HttpStatus.OK, "SUCCESS", ramService.findAll());
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/save")
     public ApiResponse save(@RequestBody RAMDTO ramdto){
         return new ApiResponse(HttpStatus.OK, "SUCCESS", ramService.save(ramdto));

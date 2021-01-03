@@ -12,5 +12,7 @@ public interface ComputerCasePSUService {
 
     List<ComputerCasePSUDTO> findAll();
 
+    ComputerCasePSUDTO findOne(Long id);
+
     void delete(Long id);
 }
